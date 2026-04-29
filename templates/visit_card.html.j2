@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>访户核对单 - {{ hname }} - {{ period_label }}</title>
+<style>
+{% include 'assets/style.css' %}
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- 页头 -->
+<div class="page-header">
+  <h1>泰州调查队住户调查处 · 访户核对单</h1>
+  <div class="meta">
+    <span><b>区间：</b>{{ period_label }}</span>
+    <span><b>住户标识：</b>{{ hhid }}</span>
+    <span><b>户主：</b>{{ hname }}</span>
+    {% if phone %}<span><b>联系电话：</b>{{ phone }}</span>{% endif %}
+    <span><b>所在地区：</b>{{ counname }}{{ townname and '/' + townname or '' }}{{ vname and '/' + vname or '' }}</span>
+    <span><b>城乡类别：</b>{{ urban_rural }}</span>
+    <span><b>地址：</b>{{ haddr }}</span>
+    <span><b>访问员：</b>{{ intcode }}</span>
+    <span><b>记账方式：</b>{{ acnttype_label }}</span>
+    <span><b>开户时间：</b>{{ opendate }}</span>
+    {% if visit_priority_score %}<span><b>访户优先级：</b>{{ "%.3f"|format(visit_priority_score|float) }}</span>{% endif %}
+  </div>
+</div>
+
+<!-- 画像速读 -->
+<div class="portrait-snapshot">
+  <h2>画像速读</h2>
+  <div class="one-liner">{{ portrait_summary }}</div>
+  <div class="tags">
+    <span class="tag">{{ labels.get('label_income', '-') }}</span>
+    <span class="tag">{{ labels.get('label_lifecycle', '-') }}</span>
+    <span class="tag">{{ labels.get('label_mobility', '-') }}</span>
+    <span class="tag">{{ acnttype_label }}</span>
+    <span class="tag tag-attention">{{ coaching_level }}</span>
+  </div>
+  <div class="peer-compare">
+    {% if peer_count >= 5 %}
+    在 {{ peer_count }} 户同类家庭中：收入 P{{ income_pct }} · 消费 P{{ consume_pct }} · 储蓄率 P{{ savings_pct }}
+    {% else %}
+    同类样本不足，暂不展示分位数对比。
+    {% endif %}
+  </div>
+</div>
+
+<!-- 家庭成员 -->
+<div class="section">
+  <div class="section-title">家庭成员</div>
+  <table>
+    <tr>
+      <th>序号</th><th>姓名</th><th>关系</th><th>性别</th><th>年龄</th>
+      <th>学历</th><th>就业</th><th>从业地区</th><th>常住</th>
+      <th>养老保险</th><th>医疗保险</th>
+    </tr>
+    {% for mem in member_list %}
+    <tr>
+      <td style="text-align:center">{{ mem.coln }}</td>
+      <td>{{ mem.name }}</td>
+      <td>{{ mem.relation }}</td>
+      <td style="text-align:center">{{ mem.gender }}</td>
+      <td style="text-align:center">{{ mem.age }}</td>
+      <td>{{ mem.edu }}</td>
+      <td>{{ mem.employed }}</td>
+      <td>{{ mem.work_area }}</td>
+      <td style="text-align:center">{{ mem.permanent }}</td>
+      <td style="text-align:center">{{ mem.pension }}</td>
+      <td style="text-align:center">{{ mem.medical }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+
+<!-- 收入结构 -->
+<div class="section">
+  <div class="section-title">收入结构（合计：{{ "%.2f"|format(income_total) }} 元）</div>
+  <table>
+    <tr><th>项目</th><th style="text-align:right">金额（元）</th><th style="text-align:right">占比</th></tr>
+    {% for name, val, pct in income_items %}
+    <tr>
+      <td>{{ name }}</td>
+      <td style="text-align:right">{{ "%.2f"|format(val) }}</td>
+      <td style="text-align:right">{{ pct }}%</td>
+    </tr>
+    {% endfor %}
+    <tr style="font-weight:bold;background:#E3F2FD">
+      <td>合计</td>
+      <td style="text-align:right">{{ "%.2f"|format(income_total) }}</td>
+      <td></td>
+    </tr>
+  </table>
+</div>
+
+<!-- 消费结构 -->
+<div class="section">
+  <div class="section-title">
+    消费结构（合计：{{ "%.2f"|format(consume_total) }} 元 · 消费率：{{ consume_rate }}%
+    {% if qoq_str %}· 环比：{{ qoq_str }}{% endif %}）
+  </div>
+  <table>
+    <tr><th>项目</th><th style="text-align:right">金额（元）</th><th style="text-align:right">占比</th></tr>
+    {% for name, val, pct in consume_cats %}
+    <tr>
+      <td>{{ name }}</td>
+      <td style="text-align:right">{{ "%.2f"|format(val) }}</td>
+      <td style="text-align:right">{{ pct }}%</td>
+    </tr>
+    {% endfor %}
+    <tr style="font-weight:bold;background:#E3F2FD">
+      <td>合计</td>
+      <td style="text-align:right">{{ "%.2f"|format(consume_total) }}</td>
+      <td></td>
+    </tr>
+  </table>
+  <div style="margin-top:4px;font-size:11px;color:#555">
+    期内累计消费：{{ "%.2f"|format(rolling_consume|float) }} 元 &nbsp;|&nbsp;
+    期内累计收入：{{ "%.2f"|format(rolling_income|float) }} 元
+  </div>
+</div>
+
+<!-- 大额收支清单 -->
+{% if large_ledger %}
+<div class="section">
+  <div class="section-title">大额收支（期内）</div>
+  <table>
+    <tr>
+      <th>日期</th><th>金额(元)</th><th>品名</th><th>编码</th><th>人码</th>
+    </tr>
+    {% for row in large_ledger %}
+    <tr class="large-item-row">
+      <td>{{ row.record_date }}</td>
+      <td style="text-align:right">{{ row.amount }}</td>
+      <td>{{ row.item_name }}</td>
+      <td>{{ row.code }}</td>
+      <td style="text-align:center">{{ row.person_code }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endif %}
+
+<!-- 住房及耐用品 -->
+<div class="section">
+  <div class="section-title">住房及耐用品（问卷B）</div>
+  <table>
+    <tr><th>项目</th><th>填报值</th></tr>
+    <tr><td>住房面积</td><td>{% if housing_area %}{{ housing_area }} 平方米{% else %}—{% endif %}</td></tr>
+    <tr><td>住房估值</td><td>{% if housing_value %}{{ housing_value }} 元{% else %}—{% endif %}</td></tr>
+    <tr><td>自有汽车</td><td>{% if car_count %}{{ car_count }} 辆{% else %}无 / 未填报{% endif %}</td></tr>
+  </table>
+</div>
+
+<!-- 辅导建议 -->
+<div class="section">
+  <div class="section-title">辅导建议（{{ audit_list|length }} 条，显示前5条）</div>
+  {% if audit_list %}
+    {% for item in audit_list %}
+    <div class="rule-item {{ item.rule_priority }}">
+      <div class="rule-title">[{{ item.rule_id }}] 辅导提示</div>
+      <div class="rule-advice">{{ item.advice_text }}</div>
+    </div>
+    {% endfor %}
+  {% else %}
+    <div style="padding:6px;color:#4caf50;font-size:12px">✓ 本期记录总体平稳，按常规节奏辅导即可</div>
+  {% endif %}
+</div>
+
+<!-- 手工备注 -->
+{% if notes %}
+<div class="section">
+  <div class="section-title">备注记录</div>
+  {% for note in notes %}
+  <div style="border-left:3px solid #aaa;padding:3px 6px;margin-bottom:3px;font-size:11px">
+    {{ note.note_text }}（{{ note.created_at[:10] }}）
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<!-- 访户情况记录 -->
+<div class="section">
+  <div class="section-title">访户情况记录（现场填写）</div>
+  <div class="blank-area">
+    原因说明 / 需补录事项 / 换户建议：
+  </div>
+  <div class="sign-row" style="margin-top:14px">
+    <div class="sign-field">访户日期：__________</div>
+    <div class="sign-field">访问员签名：__________</div>
+    <div class="sign-field">主管审核：__________</div>
+  </div>
+</div>
+
+</div>
+</body>
+</html>

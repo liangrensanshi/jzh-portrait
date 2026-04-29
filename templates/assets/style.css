@@ -1,0 +1,79 @@
+/* ── 基础 ── */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: "微软雅黑", "宋体", sans-serif; font-size: 12px; color: #333; background: #fff; }
+.container { max-width: 780px; margin: 0 auto; padding: 10px 16px; }
+
+/* ── 页头 ── */
+.page-header { border-bottom: 2px solid #1565C0; padding-bottom: 6px; margin-bottom: 12px; }
+.page-header h1 { font-size: 18px; color: #1565C0; }
+.page-header .meta { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 4px; font-size: 12px; color: #555; }
+.page-header .meta span b { color: #333; }
+
+/* ── 标签 ── */
+.labels-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+.label-chip {
+  display: inline-block; padding: 3px 10px; border-radius: 12px;
+  color: #fff; font-size: 12px; font-weight: bold; white-space: nowrap;
+}
+.portrait-snapshot {
+  border: 1px solid #BFD7F1; background: #F4F9FF; border-radius: 6px;
+  padding: 10px 12px; margin-bottom: 14px;
+}
+.portrait-snapshot h2 { font-size: 15px; color: #1565C0; margin-bottom: 5px; }
+.portrait-snapshot .one-liner { font-size: 13px; font-style: italic; color: #334155; margin-bottom: 8px; }
+.portrait-snapshot .tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
+.portrait-snapshot .tag {
+  display: inline-block; border: 1px solid #C7D7EA; background: #fff;
+  border-radius: 10px; padding: 2px 8px; color: #334155; font-size: 11px; font-weight: bold;
+}
+.portrait-snapshot .tag-attention { border-color: #F6C36A; background: #FFF7E8; color: #9A5B00; }
+.portrait-snapshot .peer-compare { font-size: 11px; color: #526174; }
+
+/* ── Section ── */
+.section { margin-bottom: 14px; }
+.section-title {
+  background: #E3F2FD; color: #1565C0; font-weight: bold;
+  padding: 3px 8px; font-size: 13px; border-left: 4px solid #1565C0;
+  margin-bottom: 6px;
+}
+
+/* ── Table ── */
+table { width: 100%; border-collapse: collapse; font-size: 11px; }
+th { background: #f5f5f5; text-align: center; padding: 3px 5px; border: 1px solid #ddd; }
+td { padding: 3px 5px; border: 1px solid #ddd; }
+tr:nth-child(even) td { background: #fafafa; }
+
+/* ── 收入/消费 ── */
+.income-row, .consume-row { display: flex; align-items: center; gap: 6px; margin-bottom: 3px; }
+.income-row .label, .consume-row .label { width: 100px; text-align: right; font-size: 11px; }
+.income-row .amount, .consume-row .amount { width: 80px; text-align: right; font-size: 11px; }
+.bar-bg { flex: 1; background: #e0e0e0; height: 10px; border-radius: 5px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 5px; background: #42A5F5; }
+.pct { width: 40px; text-align: right; font-size: 11px; color: #888; }
+
+/* ── 规则列表 ── */
+.rule-item { border-left: 3px solid #ccc; padding: 5px 8px; margin-bottom: 6px; background: #fafafa; }
+.rule-item.high { border-color: #f44336; }
+.rule-item.medium { border-color: #ff9800; }
+.rule-item.low { border-color: #8bc34a; }
+.rule-item .rule-title { font-weight: bold; font-size: 12px; }
+.rule-item .rule-advice { font-size: 11px; color: #555; margin-top: 3px; white-space: pre-wrap; }
+
+/* ── 大额清单 ── */
+.large-item-row td { font-size: 11px; }
+
+/* ── 记录区 ── */
+.blank-area { border: 1px dashed #bbb; min-height: 80px; padding: 6px; color: #aaa; font-size: 11px; }
+
+/* ── 签字栏 ── */
+.sign-row { display: flex; gap: 40px; margin-top: 10px; }
+.sign-field { flex: 1; border-bottom: 1px solid #999; padding-bottom: 2px; font-size: 11px; color: #888; }
+
+/* ── 打印 ── */
+@media print {
+  body { font-size: 11px; }
+  .container { max-width: 100%; padding: 5mm; }
+  .no-print { display: none !important; }
+  .section { page-break-inside: avoid; }
+  .page-header { border-bottom: 2pt solid #000; }
+}

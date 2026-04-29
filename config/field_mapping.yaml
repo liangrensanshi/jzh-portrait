@@ -1,0 +1,86 @@
+household:
+  "HHID(住户标识)": hhid
+  "COUN(县区代码)": coun
+  "VCODE(调查小区顺序码)": vcode
+  "城乡类别": urban_rural
+  "HCODE(住宅编码)": hcode
+  "HNAME(户主名称)": hname
+  "HHSTATUS(住户状态码)": hhstatus
+  "HHCHANGE(换户标识)": hhchange
+  "CONTACT(是否完成本期调查)": contact
+  "OPENDATE(开户时间)": opendate
+  "EXITDATE(退出时间)": exitdate
+  "ACNTTYPE(记账方式)": acnttype
+  "SURVEYTYPE(收支调查方式)": surveytype
+  "M203": phone
+
+village:
+  "VCODE(调查小区顺序码)": vcode
+  "COUN(县区代码)": coun
+  "COUNNAME(县区名称)": counname
+  "TOWNNAME(乡镇名称)": townname
+  "VNAME(调查小区名称)": vname
+  "LEVEL(城乡分类代码)": level_code
+  "LEVEL2(城乡类别)": level2
+  "TASK(季度)": quarter
+  "YEAR(年)": year
+
+house:
+  "季度": quarter
+  "年": year
+  "COUN(县区代码)": coun
+  "VCODE(调查小区顺序码)": vcode
+  "HCODE(住宅编码)": hcode
+  "HADDR(住宅地址)": haddr
+  "INTCODE(访问员编码)": intcode
+  "HSTATUS(住宅状态码)": hstatus
+
+survey_a:
+  SID: sid
+  COLN: coln
+  YEAR: year
+  TASK: quarter
+  A101: a101_name
+  A103: a103_relation
+  A104: a104_gender
+  A105: a105_birth
+  A111: a111_medical
+  A113: a113_edu
+  A114: a114_marriage
+  A119: a119_permanent
+  A201: a201_retired
+  A202: a202_pension
+  A203: a203_disabled
+  A204: a204_employed
+  A205: a205_work_type
+  A206: a206_industry
+  A208: a208_work_duration
+  A209: a209_work_area
+
+survey_b:
+  SID: sid
+  YEAR: year
+  TASK: quarter
+  COLN: coln
+  B105: b105_housing_area
+  B118: b118_housing_value
+  B201: b201_car
+
+ledger:
+  SID: sid
+  YEAR: year
+  MONTH: month
+  "页码": page_no
+  "行码": row_no
+  "编码": code
+  "数量": qty
+  "金额": amount
+  "人码": person_code
+  "是否网购": is_online
+  "记账方式": acnt_method
+  "品名": item_name
+  "问题类型": issue_type
+  "记账日期": record_date
+  "创建时间": create_time
+  "更新时间": update_time
+  "账页生成设备标识": device_id

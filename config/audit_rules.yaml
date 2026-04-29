@@ -1,0 +1,171 @@
+# A 组 · 记账过程类
+- id: R01
+  group: A
+  name: 月末集中记账
+  enabled: true
+  priority: medium
+  description: 某月21日后创建的记录占该月总数超过50%
+  custom_func: check_month_end_ratio
+  advice_template: R01
+
+- id: R02
+  group: A
+  name: 连续断记（中）
+  enabled: true
+  priority: medium
+  description: 任意连续5天无消费类记录
+  custom_func: check_gap_5_days
+  advice_template: R02
+
+- id: R03
+  group: A
+  name: 连续断记（高）
+  enabled: true
+  priority: high
+  description: 任意连续10天无消费类记录
+  custom_func: check_gap_10_days
+  advice_template: R03
+
+- id: R04
+  group: A
+  name: 食品类完全缺失
+  enabled: true
+  priority: high
+  description: 整季度31xx记录数为0
+  conditions:
+    - field: ledger_consume_count_31
+      op: eq
+      value: 0
+  advice_template: R04
+
+- id: R07
+  group: A
+  name: 消费率异常偏低
+  enabled: true
+  priority: medium
+  description: 消费总额/收入总额 < 0.3，且收入总额 > 0
+  custom_func: check_consume_income_ratio
+  advice_template: R07
+
+- id: R10
+  group: A
+  name: 整月断记
+  enabled: true
+  priority: high
+  description: 季度内某月账页记录数为0
+  custom_func: check_month_missing
+  advice_template: R10
+
+# B 组 · 逻辑一致性类
+- id: L01
+  group: B
+  name: 未成年人与教育支出不符
+  enabled: true
+  priority: high
+  description: 有3-17岁成员且教育支出低于500元
+  custom_func: check_child_edu
+  advice_template: L01
+
+- id: L04
+  group: B
+  name: 有离退休人员但无养老金收入
+  enabled: true
+  priority: high
+  description: 有离退休成员但转移性收入偏低
+  custom_func: check_retired_pension
+  advice_template: L04
+
+- id: L05
+  group: B
+  name: 就业状态与工资收入冲突
+  enabled: true
+  priority: medium
+  description: 无工资收入者（a205为2-5）但有工资收入
+  conditions:
+    - field: wage_earner_count
+      op: eq
+      value: 0
+    - field: income_wage
+      op: gt
+      value: 0
+  advice_template: L05
+
+- id: L08
+  group: B
+  name: 收支失衡
+  enabled: true
+  priority: medium
+  description: 收入总额与消费+非消费支出差异超过50%
+  custom_func: check_income_consume_balance
+  advice_template: L08
+
+- id: L09
+  group: B
+  name: 常住家庭食品消费过低
+  enabled: true
+  priority: medium
+  description: 常住人口≥2且人均日食品支出<10元
+  custom_func: check_food_per_capita
+  advice_template: L09
+
+# C 组 · 数量与分布异常
+- id: N01
+  group: C
+  name: 单笔金额超大
+  enabled: true
+  priority: medium
+  description: 存在单笔金额>季度收入的10%且>5000元
+  custom_func: check_large_single_amount
+  advice_template: N01
+
+- id: N02
+  group: C
+  name: 单类消费占比过高
+  enabled: true
+  priority: medium
+  description: 某消费大类占消费总额超过70%
+  custom_func: check_single_category_ratio
+  advice_template: N02
+
+# D 组 · 数据质量与录入类
+- id: Q01
+  group: D
+  name: 大额记录缺品名
+  enabled: true
+  priority: low
+  description: 金额>200且品名为空的记录数≥3
+  custom_func: check_missing_item_name
+  advice_template: Q01
+
+# 预留规则（暂不启用）
+- id: L02
+  group: B
+  name: 有车无燃料支出
+  enabled: false
+  priority: medium
+  description: 预留
+  advice_template: L02
+
+- id: L03
+  group: B
+  name: 有新生儿但无相关支出
+  enabled: false
+  priority: medium
+  description: 预留
+  advice_template: L03
+
+- id: R05
+  group: A
+  name: 消费类别严重缺失
+  enabled: false
+  priority: medium
+  description: 预留
+  advice_template: R05
+
+- id: R11
+  group: A
+  name: 大额补记嫌疑
+  enabled: false
+  priority: medium
+  description: 预留
+  advice_template: R11

@@ -1,0 +1,23 @@
+# Local runtime/cache
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.ruff_cache/
+
+# Local IDE/agent settings
+.claude/
+.agents/
+
+# Environment and secrets
+.env
+.env.*
+.streamlit/secrets.toml
+
+# Sensitive data and generated artifacts
+data/
+output/
+
+# OS/editor noise
+.DS_Store
+Thumbs.db

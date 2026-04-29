@@ -1,0 +1,60 @@
+# NOTE: This file is a reference/design document only.
+# The actual classification logic is hardcoded in src/compute/classifier.py.
+# If you modify classifier.py, update this file to keep them in sync.
+
+income_structure:
+  - label: 工薪型
+    func: check_income_wage_dominant
+  - label: 经营型
+    func: check_income_business_dominant
+  - label: 转移型
+    func: check_income_transfer_dominant
+  - label: 混合型
+    func: check_income_mixed
+  - label: 无收入记录
+    condition:
+      field: income_total
+      op: eq
+      value: 0
+
+lifecycle:
+  - label: 单人户
+    condition:
+      field: family_size_registered
+      op: eq
+      value: 1
+  - label: 三代同堂
+    func: check_three_generations
+  - label: 幼儿家庭
+    condition:
+      field: has_child_0_6
+      op: eq
+      value: 1
+  - label: 学龄家庭
+    func: check_school_age_family
+  - label: 夫妻户
+    func: check_couple_only
+  - label: 老年家庭
+    func: check_elder_family
+  - label: 中青年核心家庭
+    func: check_middle_age_family
+  - label: 其他
+    func: check_other_lifecycle
+
+mobility:
+  - label: 全家常住
+    func: check_all_permanent
+  - label: 整户外出
+    func: check_all_migrant
+  - label: 半流动
+    func: check_semi_mobile
+
+quality:
+  - label: A
+    score_min: 80
+  - label: B
+    score_min: 60
+  - label: C
+    score_min: 40
+  - label: D
+    score_min: 0

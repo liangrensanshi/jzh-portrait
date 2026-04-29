@@ -1,0 +1,61 @@
+income_structure:
+  wage_ratio_workers: 0.50
+  business_ratio: 0.30
+  business_gross_ratio: 0.40
+  transfer_ratio_retired: 0.50
+
+audit:
+  R01_month_end_ratio: 0.50
+  R02_gap_days: 5
+  R03_gap_days: 10
+  R04_food_count: 0
+  R07_consume_income_ratio: 0.30
+  L01_min_child_age: 3
+  L01_max_child_age: 17
+  L01_edu_threshold: 500
+  L04_pension_per_person: 3000
+  L05_wage_with_no_employment: 0
+  L08_balance_deviation: 0.50
+  L09_food_per_capita_per_day: 10
+  N01_amount_min: 5000
+  N01_income_ratio: 0.10
+  N02_single_category_ratio: 0.70
+  Q01_no_name_amount_min: 200
+  Q01_no_name_count_min: 3
+
+visit_card:
+  large_amount_ratio: 0.01
+  large_amount_floor: 1000
+  large_amount_lookback_quarters: 2
+  max_rules_shown: 5
+
+scoring:
+  level_a_min: 80
+  level_b_min: 60
+  level_c_min: 40
+
+  rules:
+    R10_month_missing:
+      max_points: 15
+      deduction_per_trigger: 15
+    R04_food_missing:
+      max_points: 10
+      deduction: 10
+    R01_month_end:
+      max_points: 15
+      deduction_per_10_percent: 3
+    R02_gap_5:
+      deduction: 8
+    R03_gap_10:
+      deduction: 15
+    Q02_system_issue:
+      max_points: 15
+      deduction_per_record: 3
+    R07_consume_low:
+      deduction: 5
+
+visit_priority:
+  weight_risk: 0.5
+  weight_quality: 0.3
+  weight_recency: 0.2
+  top_percent_highlight: 0.20

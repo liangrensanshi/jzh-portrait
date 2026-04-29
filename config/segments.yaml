@@ -1,0 +1,44 @@
+segments:
+  - id: elderly_transfer
+    name: 老年转移型户
+    desc: 老年家庭以养老金等转移性收入为主要收入来源。
+    filter:
+      label_lifecycle: 老年家庭
+      label_income: 转移型
+    coaching_focus: 重点核实养老金、医疗支出记录是否完整；关注是否有子女赡养收支。
+
+  - id: school_age_family
+    name: 学龄家庭
+    desc: 有 7-17 岁学龄子女的家庭。
+    filter:
+      has_child_7_17: 1
+    coaching_focus: 重点核实教育支出、辅导班、学习用品、校内伙食费等是否完整记录。
+
+  - id: business_household
+    name: 经营户家庭
+    desc: 以经营收入为主的家庭。
+    filter:
+      label_income: 经营型
+    coaching_focus: 注意区分经营成本和生活消费，关注成本收益比和家庭生活支出是否完整。
+
+  - id: migrant_household
+    name: 整户外出务工
+    desc: 家庭成员常住状态显示整户外出或长期外出。
+    filter:
+      label_mobility: 整户外出
+    coaching_focus: 关注外出期间记账连续性，寄回家的钱和外出期间生活消费要按口径记录。
+
+  - id: high_income_low_consume
+    name: 高收入低消费户
+    desc: 本期收入水平较高但消费率明显偏低，可能存在日常消费漏记。
+    filter:
+      income_total_gt: 30000
+      consume_rate_lt: 0.3
+    coaching_focus: 重点核实日常消费记录完整性，大额支出、居住支出和交通通信支出是否漏记。
+
+  - id: three_generation
+    name: 三代同堂家庭
+    desc: 同时有未成年成员和老年成员的家庭。
+    filter:
+      label_lifecycle: 三代同堂
+    coaching_focus: 注意各代成员的支出归属，赡养支出、教育支出和医疗支出要分清。

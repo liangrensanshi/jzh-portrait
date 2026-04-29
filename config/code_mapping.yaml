@@ -1,0 +1,27 @@
+income_wage:
+  prefix: ["21"]
+
+income_business_gross:
+  prefix: ["12", "22"]
+
+income_business_cost:
+  prefix: ["13", "14", "15"]
+
+income_property:
+  prefix: ["23"]
+
+income_transfer:
+  prefix: ["24"]
+
+consume:
+  "31": 食品烟酒
+  "32": 衣着
+  "33": 居住
+  "34": 生活用品及服务
+  "35": 交通通信
+  "36": 教育文化娱乐
+  "37": 医疗保健
+  "38": 其他用品及服务
+
+in_kind_prefix: ["4"]
+nonconsume_prefix: ["5"]
